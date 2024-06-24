@@ -1,5 +1,8 @@
 package java.gift;
 
-public class ProductController {
+import java.util.HashMap;
+import java.util.Map;
 
+public class ProductController {
+    private final Map<Long, Product> producsts = new HashMap<>();
 }
