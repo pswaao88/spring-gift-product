@@ -18,29 +18,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final Map<Long, Product> products = new HashMap<Long, Product>();
-
-    @GetMapping("/api/products/{id}")
-    public List<Product> getProduct(@PathVariable Long id) {
+    // id를 통해 map에있는 정보 접근
+    @GetMapping("/api/products")
+    public List<Product> getProduct(@RequestParam("id") Long id) {
         return Collections.singletonList(products.get(id));
     }
-
+    // 새로운 정보 저장
     @PostMapping("/api/products")
-    public String postProduct(@RequestBody Product newProduct){
+    public List<Product> postProduct(@RequestBody Product newProduct){
         products.put(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
-        return "Post";
+        return Collections.singletonList(products.get(newProduct.id()));
     }
-
+    // id에 해당되는 정보 삭제
     @DeleteMapping("/api/products")
-    public String deleteProduct(@RequestParam("id") Long id){
+    public List<Product> deleteProduct(@RequestParam("id") Long id){
+        Product delete = products.get(id);
         products.remove(id);
-        return "Delete";
+        return Collections.singletonList(delete);
     }
-
+    // 정보 수정
     @PutMapping("/api/products")
-    public String putProducts(@RequestBody Product newProduct){
+    public List<Product> putProducts(@RequestBody Product newProduct){
         products.replace(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
-        return "Put";
+        return Collections.singletonList(products.get(newProduct.id()));
     }
-
-
 }
