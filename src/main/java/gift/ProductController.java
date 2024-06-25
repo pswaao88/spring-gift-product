@@ -43,4 +43,8 @@ public class ProductController {
         products.replace(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
         return ResponseEntity.ok().headers(new HttpHeaders()).body(products.get(newProduct.id()));
     }
+
+    public Map<Long, Product> getProducts() {
+        return products;
+    }
 }
