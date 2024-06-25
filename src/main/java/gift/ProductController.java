@@ -38,8 +38,7 @@ public class ProductController {
 
     @PutMapping("/api/products")
     public String putProducts(@RequestBody Product newProduct){
-        products.remove(newProduct.id());
-        products.put(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
+        products.replace(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
         return "Put";
     }
 
