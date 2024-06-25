@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,8 +25,8 @@ public class ProductController {
     }
 
     @PostMapping("/api/products")
-    public String postProduct(@RequestBody Product product){
-        products.put(product.id(), new Product(product.id(), product.name(), product.price(), product.imageUrl()));
+    public String postProduct(@RequestBody Product newProduct){
+        products.put(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
         return "Post";
     }
 
@@ -33,6 +34,13 @@ public class ProductController {
     public String deleteProduct(@RequestParam("id") Long id){
         products.remove(id);
         return "Delete";
+    }
+
+    @PutMapping("/api/products")
+    public String putProducts(@RequestBody Product newProduct){
+        products.remove(newProduct.id());
+        products.put(newProduct.id(), new Product(newProduct.id(), newProduct.name(), newProduct.price(), newProduct.imageUrl()));
+        return "Put";
     }
 
 
