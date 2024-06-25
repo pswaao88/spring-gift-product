@@ -24,9 +24,9 @@ public class ProductController {
     }
 
     @PostMapping("/api/products")
-    public List<Product> postProduct(@RequestBody Product product){
+    public String postProduct(@RequestBody Product product){
         products.put(product.id(), new Product(product.id(), product.name(), product.price(), product.imageUrl()));
-        return Collections.singletonList(products.get(product.id()));
+        return "Post";
     }
 
     @DeleteMapping("/api/products")
@@ -34,5 +34,6 @@ public class ProductController {
         products.remove(id);
         return "Delete";
     }
+
 
 }
