@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <style>
+
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #dddddd;
+    }
+
+  </style>
+
+  <!-- 내부 js -->
+  <script>
+    window.onload = function() {
+      console.log("");
+      console.log("[window onload] : [start]");
+      console.log("");
+    };
+  </script>
+</head>
+
+<body>
+<div class="container" style="max-width: 1000px">
+  <div class="py-5 text-center">
+    <p>
+      <span id = "Title " th:text="'작업자 화면' "> THis is events page </span>
+    </p>  </div>
+
+  <div class="mb-3">
+    <button class="btn btn-success" onclick="location.href='/api/products/add'">Add</button>
+  </div>
+
+  <div>
+
+    <table id = "Table">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>ImageUrl</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product : ${products}">
+        <td class="id" th:text="${product.id}">ID</td>
+        <td class="name" th:text="${product.name}">NAME</td>
+        <td class="price" th:text="${product.price}">PRICE</td>
+        <td class="imageUrl" th:text="${product.imageUrl}">IMAGEURL</td>
+        <td>
+          <a th:href="@{/api/products/delete?(id=${product.id})}">글 삭제</a>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
+
