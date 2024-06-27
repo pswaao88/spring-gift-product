@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>상품 추가하기</h1>
-<form th:action="@{${product.id} == null ? '/api/products' : '/api/products/update/' + ${product.id}}"  th:object="${product}" method="post">
+<form th:action="@{${product.id} == 0 ? '/api/products' : '/api/products/update/' + ${product.id}}"  th:object="${product}" method="post">
   <label>id: <input type="number" th:field="*{id}" /></label><br>
   <label>name: <input type="text" th:field="*{name}" /></label><br>
   <label>price: <input type="number" th:field="*{price}" /></label><br>

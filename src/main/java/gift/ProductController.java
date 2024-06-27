@@ -26,13 +26,13 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model model) {
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new Product(0L,"",0,""));
         return "post";
     }
 
     @PostMapping
     public String postProduct(@ModelAttribute Product product) {
-        products.put(product.getId(), product);
+        products.put(product.id(), product);
         return "redirect:/api/products";
     }
 
@@ -45,11 +45,7 @@ public class ProductController {
 
     @PostMapping("/update/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product newProduct) {
-        Product product = products.get(id);
-        product.setName(newProduct.getName());
-        product.setPrice(newProduct.getPrice());
-        product.setImageUrl(newProduct.getImageUrl());
-        products.put(id, product);
+        products.put(id, newProduct);
         return "redirect:/api/products";
     }
 

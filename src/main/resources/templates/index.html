@@ -65,9 +65,13 @@
         <td class="price" th:text="${product.price}">PRICE</td>
         <td class="imageUrl" th:text="${product.imageUrl}">IMAGEURL</td>
         <td>
-          <a th:href="@{/api/products/delete?(id=${product.id})}">글 삭제</a>
+          <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
         </td>
-
+        <td>
+          <button class="btn btn-warning" th:onclick="'location.href=\'/api/products/update/' + ${product.id} + '\';'">Update</button>
+        </td>
       </tr>
       </tbody>
     </table>
