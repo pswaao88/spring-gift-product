@@ -1,10 +1,9 @@
 package gift.Controller;
 
 import gift.Model.Product;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import gift.Service.ProductService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 public class ProductController {
 
-    private final Map<Long, Product> products = new HashMap<>();
+    private final ProductService productService;
+    @Autowired
+    public ProductController(ProductService productService){
+        this.productService = productService;
+    }
 
     @GetMapping("/api/products")
     public String getProducts(Model model) {
-        model.addAttribute("products", new ArrayList<>(products.values()));
+        model.addAttribute("products", productService.getAllProducts());
         return "index";
     }
 
@@ -32,26 +35,26 @@ public class ProductController {
 
     @PostMapping("/api/products")
     public String createProduct(@ModelAttribute Product product) {
-        products.put(product.getId(), product);
+        productService.saveProduct(product);
         return "redirect:/api/products";
     }
 
     @GetMapping("/api/products/update/{id}")
-    public String editProductForm(@PathVariable Long id, Model model) {
-        Product product = products.get(id);
+    public String editProductForm(@PathVariable(value = "id") Long id, Model model) {
+        Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         return "post";
     }
 
     @PostMapping("/api/products/update/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute Product newProduct) {
-        products.put(id, newProduct);
+    public String updateProduct(@PathVariable(value = "id") Long id, @ModelAttribute Product newProduct) {
+        productService.saveProduct(newProduct);
         return "redirect:/api/products";
     }
 
     @PostMapping("/api/products/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
-        products.remove(id);
+    public String deleteProduct(@PathVariable(value = "id") Long id) {
+        productService.deleteProduct(id);
         return "redirect:/api/products";
     }
 }

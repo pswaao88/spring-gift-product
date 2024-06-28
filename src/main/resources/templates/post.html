@@ -15,10 +15,6 @@
   <h1>입력</h1>
   <form th:action="@{${product.id} == null ? '/api/products' : '/api/products/update/' + ${product.id}}" th:object="${product}" method="post">
     <div class="form-group">
-      <label for="id">Id: </label>
-      <input type="text" class="form-control" id="id" th:field="*{id}" required>
-    </div>
-    <div class="form-group">
       <label for="name">Name: </label>
       <input type="text" class="form-control" id="name" th:field="*{name}" required>
     </div>
