@@ -12,45 +12,46 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 @Controller
-@RequestMapping(value = "/api/products")
+
 public class ProductController {
 
-    private JdbcTemplate jdbcTemplate;
+    private final Map<Long, Product> products = new HashMap<>();
 
-    public ProductController(JdbcTemplate jdbcTemplate){
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @GetMapping
-    public String getProduct(Model model) {
+    @GetMapping("/api/products")
+    public String getProducts(Model model) {
+        model.addAttribute("products", new ArrayList<>(products.values()));
         return "index";
     }
 
-    @GetMapping("/add")
-    public String addProduct(Model model) {
-        model.addAttribute("product", new Product(0L,"",0,""));
+    @GetMapping("/api/products/add")
+    public String newProductForm(Model model) {
+        model.addAttribute("product", new Product());
         return "post";
     }
 
-    @PostMapping
-    public String postProduct(@ModelAttribute Product product) {
+    @PostMapping("/api/products")
+    public String createProduct(@ModelAttribute Product product) {
+        products.put(product.getId(), product);
         return "redirect:/api/products";
     }
 
-    @GetMapping("/update/{id}")
-    public String editProduct(@PathVariable Long id, Model model) {
-        return "upgrade";
+    @GetMapping("/api/products/update/{id}")
+    public String editProductForm(@PathVariable Long id, Model model) {
+        Product product = products.get(id);
+        model.addAttribute("product", product);
+        return "post";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/api/products/update/{id}")
     public String updateProduct(@PathVariable Long id, @ModelAttribute Product newProduct) {
+        products.put(id, newProduct);
         return "redirect:/api/products";
     }
 
-    @PostMapping("/delete/{id}")
+    @PostMapping("/api/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
+        products.remove(id);
         return "redirect:/api/products";
     }
 }

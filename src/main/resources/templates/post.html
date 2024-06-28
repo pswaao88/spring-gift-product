@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>상품 추가하기</title>
+  <title>Product Form</title>
 </head>
 <body>
-<h1>상품 추가하기</h1>
-<form th:action="/api/products"  th:object="${product}" method="post">
-  <label>id: <input type="number" th:field="*{id}" /></label><br>
-  <label>name: <input type="text" th:field="*{name}" /></label><br>
-  <label>price: <input type="number" th:field="*{price}" /></label><br>
-  <label>imageUrl: <input type="text" th:field="*{imageUrl}" /></label><br>
-  <button type="submit">완료</button>
-</form>
-<a href="/api/products">돌아가기</a>
+<div class="container mt-5">
+  <h1>Product Form</h1>
+  <form th:action="@{${product.id} == null ? '/api/products' : '/api/products/update/' + ${product.id}}" th:object="${product}" method="post">
+    <div class="form-group">
+      <label for="id">Id</label>
+      <input type="text" class="form-control" id="id" th:field="*{id}" required>
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" th:field="*{name}" required>
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" class="form-control" id="price" th:field="*{price}" required>
+    </div>
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/api/products" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
 </body>
 </html>

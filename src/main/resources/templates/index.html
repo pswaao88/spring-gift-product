@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-
   <style>
-
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
@@ -23,8 +21,6 @@
     }
 
   </style>
-
-  <!-- 내부 js -->
   <script>
     window.onload = function() {
       console.log("");
@@ -33,50 +29,38 @@
     };
   </script>
 </head>
-
 <body>
-<div class="container" style="max-width: 1000px">
-  <div class="py-5 text-center">
-    <p>
-      <span id = "Title " th:text="'작업자 화면' "> THis is events page </span>
-    </p>  </div>
-
+<div class="container mt-5">
+  <h1>Manage <strong>Products</strong></h1>
   <div class="mb-3">
-    <button class="btn btn-success" onclick="location.href='/api/products/add'">Add</button>
+    <button class="btn btn-success" onclick="location.href='/api/products/add'">Add New Product</button>
   </div>
-
-  <div>
-
-    <table id = "Table">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>ImageUrl</th>
-        <th>Delete</th>
-        <th>Update</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="product : ${products}">
-        <td class="id" th:text="${product.id}">ID</td>
-        <td class="name" th:text="${product.name}">NAME</td>
-        <td class="price" th:text="${product.price}">PRICE</td>
-        <td class="imageUrl" th:text="${product.imageUrl}">IMAGEURL</td>
-        <td>
-          <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
-        </td>
-        <td>
-          <button class="btn btn-warning" th:onclick="'location.href=\'/api/products/update/' + ${product.id} + '\';'">Update</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Image URL</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.name}"></td>
+      <td th:text="${product.price}"></td>
+      <td th:text="${product.imageUrl}"></td>
+      <td>
+        <button class="btn btn-warning" th:onclick="'location.href=\'/api/products/update/' + ${product.id} + '\';'">Update</button>
+      </td>
+      <td>
+        <form th:action="@{/api/products/delete/{id}(id=${product.id})}" method="post" style="display:inline;">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
 </body>
 </html>
-
