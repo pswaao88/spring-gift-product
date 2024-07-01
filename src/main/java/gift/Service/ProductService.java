@@ -13,7 +13,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Autowired
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
     }
@@ -26,14 +25,11 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
+    public void addProduct(Product product){
+        productRepository.add(product);
+    }
 
-
-
-    public void saveProduct(Product product){
-        if (product.getId() == null){
-            productRepository.save(product);
-            return;
-        }
+    public void updateProduct(Product product){
         productRepository.update(product);
     }
 

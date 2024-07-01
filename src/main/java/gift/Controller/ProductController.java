@@ -35,7 +35,7 @@ public class ProductController {
 
     @PostMapping("/api/products")
     public String createProduct(@ModelAttribute Product product) {
-        productService.saveProduct(product);
+        productService.addProduct(product);
         return "redirect:/api/products";
     }
 
@@ -43,12 +43,12 @@ public class ProductController {
     public String editProductForm(@PathVariable(value = "id") Long id, Model model) {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
-        return "post";
+        return "update";
     }
 
     @PostMapping("/api/products/update/{id}")
     public String updateProduct(@PathVariable(value = "id") Long id, @ModelAttribute Product newProduct) {
-        productService.saveProduct(newProduct);
+        productService.updateProduct(newProduct);
         return "redirect:/api/products";
     }
 

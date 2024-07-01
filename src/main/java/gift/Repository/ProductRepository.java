@@ -21,7 +21,7 @@ public class ProductRepository {
 
     private final RowMapper<Product> rowMapper = new BeanPropertyRowMapper<>(Product.class);
 
-    public int save(Product product){
+    public int add(Product product){
         return jdbcTemplate.update("INSERT INTO product (name, price, imageUrl) VALUES (?,?,?)",product.getName(),product.getPrice(),product.getImageUrl());
     }
 
